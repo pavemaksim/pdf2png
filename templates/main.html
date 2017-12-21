@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if current_user %}
+    <form enctype="multipart/form-data" action="/upload" method="post">
+        File: <input type="file" name="file" />
+        <input type="submit" value="Upload" />
+        {% raw xsrf_form_html() %}
+    </form>
+{% end %}
+
+<table>
+    <tr>
+        <td>User</td>
+        <td>File (pdf)</td>
+        <td>PNGs</td>
+    </tr>
+    {% for file in files %}
+        <tr>
+            <td>{{ file.user.username }}</td>
+            <td><a href="{{ static_url('{}.pdf'.format(file.filename)) }}">{{ file.filename }}</a></td>
+            <td>
+                {% for i in range(0, file.length) %}
+                    <a href="{{ static_url('{}/{}.png'.format(file.filename, i)) }}">
+                        Page #{{ i + 1 }}
+                    </a>
+                {% end %}
+            </td>
+        </tr>
+    {% end %}
+</table>
+
+{% end %}

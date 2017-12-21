@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% if error %}
+        <p>Invalid credentials</p>
+    {% end %}
+     <form id="login_form" action="login" method="post">
+        <input type="text" name="username">
+        <input type="password" name="password" id="password">
+        <input type="submit" id="loginbtn" name="login" value="Submit" class="button">
+        {% raw xsrf_form_html() %}
+    </form>
+{% end %}
